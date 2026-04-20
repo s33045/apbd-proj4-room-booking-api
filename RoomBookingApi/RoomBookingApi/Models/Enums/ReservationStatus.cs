@@ -1,4 +1,4 @@
-﻿namespace RoomBookingApi.models;
+﻿namespace RoomBookingApi.Models.Enums;
 
 public enum ReservationStatus
 {
