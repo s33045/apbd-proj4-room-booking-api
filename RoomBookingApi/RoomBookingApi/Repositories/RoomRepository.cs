@@ -4,7 +4,7 @@ namespace RoomBookingApi.Repositories;
 
 public class RoomRepository : IRoomRepository
 {
-    private static int _nextId = 1;
+    private static int _nextId = 6; // hardcoded just for tests
 
     private static readonly List<Room> _rooms =
     [
