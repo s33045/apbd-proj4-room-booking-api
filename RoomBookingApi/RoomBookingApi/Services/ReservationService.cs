@@ -56,4 +56,19 @@ public class ReservationService(IReservationRepository reservationRepository, IR
 
         return reservationRepository.Delete(id);
     }
+
+    public bool HasConflict(int roomId, DateOnly date, TimeOnly startTime, TimeOnly endTime,
+        int? ignoredReservationId = null)
+    {
+        return reservationRepository
+            .GetFiltered(date, null, roomId)
+            .Where(reservation => reservation.Id != ignoredReservationId)
+            .Where(reservation => reservation.Status != ReservationStatus.Cancelled)
+            .Any(reservation => startTime < reservation.EndTime && endTime > reservation.StartTime);
+    }
+
+    public bool AnyForRoom(int roomId)
+    {
+        return reservationRepository.AnyForRoom(roomId);
+    }
 }

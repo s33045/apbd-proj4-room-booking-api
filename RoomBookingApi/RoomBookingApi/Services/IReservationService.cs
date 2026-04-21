@@ -11,4 +11,6 @@ public interface IReservationService
     bool Add(Reservation reservation);
     bool Update(Reservation reservation);
     bool Delete(int id);
+    bool HasConflict(int roomId, DateOnly date, TimeOnly startTime, TimeOnly endTime, int? ignoredReservationId = null);
+    bool AnyForRoom(int roomId);
 }
