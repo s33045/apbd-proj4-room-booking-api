@@ -12,4 +12,5 @@ public interface IReservationRepository
     bool Update(Reservation reservation);
     bool Delete(int id);
     bool Exists(int id);
+    bool AnyForRoom(int roomId);
 }

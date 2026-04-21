@@ -126,4 +126,9 @@ public class ReservationRepository : IReservationRepository
     {
         return _reservations.Any(reservation => reservation.Id == id);
     }
+
+    public bool AnyForRoom(int roomId)
+    {
+        return _reservations.Any(reservation => reservation.RoomId == roomId);
+    }
 }
