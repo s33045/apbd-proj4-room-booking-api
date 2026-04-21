@@ -1,4 +1,5 @@
-﻿using RoomBookingApi.Models;
+﻿using RoomBookingApi.Exceptions;
+using RoomBookingApi.Models;
 using RoomBookingApi.Models.Enums;
 using RoomBookingApi.Repositories;
 
@@ -14,7 +15,7 @@ public class ReservationService(IReservationRepository reservationRepository, IR
 
     public Reservation? GetById(int id)
     {
-        return reservationRepository.GetById(id);
+        return reservationRepository.GetById(id) ?? throw new ReservationNotFoundException(id);
     }
 
     public IEnumerable<Reservation> GetFiltered(DateOnly? date, ReservationStatus? status, int? roomId)
@@ -25,7 +26,7 @@ public class ReservationService(IReservationRepository reservationRepository, IR
     public bool Add(Reservation reservation)
     {
         if (!roomRepository.Exists(reservation.RoomId))
-            return false;
+            throw new RoomNotFoundException(reservation.RoomId);
 
         if (reservation.StartTime >= reservation.EndTime)
             return false;
@@ -36,8 +37,11 @@ public class ReservationService(IReservationRepository reservationRepository, IR
 
     public bool Update(Reservation reservation)
     {
+        if (!reservationRepository.Exists(reservation.Id))
+            throw new ReservationNotFoundException(reservation.Id);
+
         if (!roomRepository.Exists(reservation.RoomId))
-            return false;
+            throw new RoomNotFoundException(reservation.RoomId);
 
         if (reservation.StartTime >= reservation.EndTime)
             return false;
@@ -47,6 +51,9 @@ public class ReservationService(IReservationRepository reservationRepository, IR
 
     public bool Delete(int id)
     {
+        if (!reservationRepository.Exists(id))
+            throw new ReservationNotFoundException(id);
+
         return reservationRepository.Delete(id);
     }
 }

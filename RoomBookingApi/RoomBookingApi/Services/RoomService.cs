@@ -1,4 +1,5 @@
-﻿using RoomBookingApi.Models;
+﻿using RoomBookingApi.Exceptions;
+using RoomBookingApi.Models;
 using RoomBookingApi.Repositories;
 
 namespace RoomBookingApi.Services;
@@ -12,7 +13,8 @@ public class RoomService(IRoomRepository roomRepository) : IRoomService
 
     public Room? GetById(int id)
     {
-        return roomRepository.GetById(id);
+        return roomRepository.GetById(id)
+               ?? throw new RoomNotFoundException(id);
     }
 
     public IEnumerable<Room> GetByBuildingCode(string buildingCode)
@@ -32,11 +34,17 @@ public class RoomService(IRoomRepository roomRepository) : IRoomService
 
     public bool Update(Room room)
     {
+        if (!roomRepository.Exists(room.Id))
+            throw new RoomNotFoundException(room.Id);
+
         return roomRepository.Update(room);
     }
 
     public bool Delete(int id)
     {
+        if (!roomRepository.Exists(id))
+            throw new RoomNotFoundException(id);
+
         return roomRepository.Delete(id);
     }
 }
