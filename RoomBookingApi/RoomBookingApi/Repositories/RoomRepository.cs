@@ -5,7 +5,30 @@ namespace RoomBookingApi.Repositories;
 public class RoomRepository : IRoomRepository
 {
     private static int _nextId = 1;
-    private static readonly List<Room> _rooms = [];
+
+    private static readonly List<Room> _rooms =
+    [
+        new()
+        {
+            Id = 1, Name = "A101", BuildingCode = "A", Floor = 1, Capacity = 20, HasProjector = true, IsActive = true
+        },
+        new()
+        {
+            Id = 2, Name = "A201", BuildingCode = "A", Floor = 2, Capacity = 35, HasProjector = true, IsActive = true
+        },
+        new()
+        {
+            Id = 3, Name = "B105", BuildingCode = "B", Floor = 1, Capacity = 12, HasProjector = false, IsActive = true
+        },
+        new()
+        {
+            Id = 4, Name = "C301", BuildingCode = "C", Floor = 3, Capacity = 50, HasProjector = true, IsActive = false
+        },
+        new()
+        {
+            Id = 5, Name = "D010", BuildingCode = "D", Floor = 0, Capacity = 8, HasProjector = false, IsActive = true
+        }
+    ];
 
     public IEnumerable<Room> GetAll()
     {

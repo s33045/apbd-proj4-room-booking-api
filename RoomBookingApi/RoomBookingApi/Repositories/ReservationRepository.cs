@@ -6,7 +6,65 @@ namespace RoomBookingApi.Repositories;
 public class ReservationRepository : IReservationRepository
 {
     private static int _nextId = 1;
-    private static readonly List<Reservation> _reservations = [];
+
+    private static readonly List<Reservation> _reservations =
+    [
+        new()
+        {
+            Id = 1,
+            RoomId = 1,
+            OrganizerName = "Jan Kowalski",
+            Topic = "Planowanie biegów",
+            Date = new DateOnly(2026, 5, 10),
+            StartTime = new TimeOnly(9, 0),
+            EndTime = new TimeOnly(10, 0),
+            Status = ReservationStatus.Confirmed
+        },
+        new()
+        {
+            Id = 2,
+            RoomId = 1,
+            OrganizerName = "Anna Nowak",
+            Topic = "Nauka",
+            Date = new DateOnly(2026, 5, 10),
+            StartTime = new TimeOnly(10, 30),
+            EndTime = new TimeOnly(11, 30),
+            Status = ReservationStatus.Planned
+        },
+        new()
+        {
+            Id = 3,
+            RoomId = 2,
+            OrganizerName = "Piotr Wisniewski",
+            Topic = "Spotkanie z klientem",
+            Date = new DateOnly(2026, 5, 11),
+            StartTime = new TimeOnly(12, 0),
+            EndTime = new TimeOnly(13, 0),
+            Status = ReservationStatus.Confirmed
+        },
+        new()
+        {
+            Id = 4,
+            RoomId = 3,
+            OrganizerName = "Katarzyna Zielinska",
+            Topic = "Warsztaty",
+            Date = new DateOnly(2026, 5, 12),
+            StartTime = new TimeOnly(8, 30),
+            EndTime = new TimeOnly(9, 15),
+            Status = ReservationStatus.Cancelled
+        },
+        new()
+        {
+            Id = 5,
+            RoomId = 5,
+            OrganizerName = "Marek Lewandowski",
+            Topic = "Vlog",
+            Date = new DateOnly(2026, 5, 13),
+            StartTime = new TimeOnly(14, 0),
+            EndTime = new TimeOnly(14, 30),
+            Status = ReservationStatus.Confirmed
+        }
+    ];
 
     public IEnumerable<Reservation> GetAll()
     {
