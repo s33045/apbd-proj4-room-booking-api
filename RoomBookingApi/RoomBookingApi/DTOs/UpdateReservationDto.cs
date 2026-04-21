@@ -3,7 +3,7 @@ using RoomBookingApi.Models.Enums;
 
 namespace RoomBookingApi.DTOs;
 
-public class UpdateReservationDto
+public class UpdateReservationDto : IValidatableObject
 {
     [Range(1, int.MaxValue)] public int RoomId { get; set; }
     [Required] [MaxLength(100)] public string OrganizerName { get; set; } = string.Empty;
@@ -12,4 +12,14 @@ public class UpdateReservationDto
     public TimeOnly StartTime { get; set; }
     public TimeOnly EndTime { get; set; }
     public ReservationStatus Status { get; set; }
+
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (EndTime <= StartTime)
+            yield return new ValidationResult(
+                "EndTime must be later than StartTime.",
+                [nameof(EndTime)]
+            );
+    }
 }
