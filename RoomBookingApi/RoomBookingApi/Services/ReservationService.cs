@@ -28,9 +28,6 @@ public class ReservationService(IReservationRepository reservationRepository, IR
         if (!roomRepository.Exists(reservation.RoomId))
             throw new RoomNotFoundException(reservation.RoomId);
 
-        if (reservation.StartTime >= reservation.EndTime)
-            return false;
-
         reservationRepository.Add(reservation);
         return true;
     }
@@ -42,9 +39,6 @@ public class ReservationService(IReservationRepository reservationRepository, IR
 
         if (!roomRepository.Exists(reservation.RoomId))
             throw new RoomNotFoundException(reservation.RoomId);
-
-        if (reservation.StartTime >= reservation.EndTime)
-            return false;
 
         return reservationRepository.Update(reservation);
     }
